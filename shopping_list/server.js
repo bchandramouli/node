@@ -16,7 +16,7 @@ var itemObj = {
 	getItem: function () {
 		return (this.item);
 	}
-}
+};
 
 function sanitizeUrl(req, res) {
 
@@ -47,11 +47,11 @@ function processReq(req, iObj) {
 var server = http.createServer(function (req, res) {
 	switch (req.method) {
 		case "POST":
-			var iObj = Object.create(itemObj);
-			processReq(req, iObj);
+			var postObj = Object.create(itemObj);
+			processReq(req, postObj);
 
 			req.on("end", function () {
-				var itm = iObj.getItem();
+				var itm = postObj.getItem();
 				items.push(itm);
 				res.end("Item Added: " + itm + "\n");
 			});
@@ -65,23 +65,23 @@ var server = http.createServer(function (req, res) {
 			break;
 
 		case "DELETE":
-            var index = sanitizeUrl(req, res);
-			if (index !== null) {
-		    	res.end("Deleting item " + items[index] + " ...\n");
-		    	items.splice(index, 1);
+            var dIdx = sanitizeUrl(req, res);
+			if (dIdx !== null) {
+		    	res.end("Deleting item " + items[dIdx] + " ...\n");
+		    	items.splice(dIdx, 1);
 		    }
 		    break;
 
 		case "PUT":
-			var index = sanitizeUrl(req, res);
-			if (index !== null) {
-				var iObj = Object.create(itemObj);
-				processReq(req, iObj);
+			var pIdx = sanitizeUrl(req, res);
+			if (pIdx !== null) {
+				var putObj = Object.create(itemObj);
+				processReq(req, putObj);
 
 				req.on("end", function () {
-					itm = iObj.getItem;
-					res.end("Updating Item from: " + items[index] + " to: " + itm + "\n");
-					items[index] = itm;
+					itm = putObj.getItem;
+					res.end("Updating Item from: " + items[pIdx] + " to: " + itm + "\n");
+					items[pIdx] = itm;
 				});
 			}
 			break;
