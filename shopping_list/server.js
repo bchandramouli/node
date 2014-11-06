@@ -6,6 +6,18 @@ var url = require("url");
 
 var items = [];
 
+var itemObj = {
+	item: "",
+
+	addChunk: function (chunk) {
+		this.item += chunk;
+	},
+
+	getItem: function () {
+		return (this.item);
+	}
+}
+
 function sanitizeUrl(req, res) {
 
 	var path = url.parse(req.url).pathname;
@@ -27,7 +39,7 @@ function sanitizeUrl(req, res) {
 function processReq(req, iObj) {
 	req.setEncoding("utf8");
 	req.on("data", function (chunk) {
-			iObj.item += chunk;
+		iObj.addChunk(chunk);
 	});
 }
 
@@ -35,11 +47,11 @@ function processReq(req, iObj) {
 var server = http.createServer(function (req, res) {
 	switch (req.method) {
 		case "POST":
-			var itemObj = {item: ""};
-			processReq(req, itemObj);
+			var iObj = Object.create(itemObj);
+			processReq(req, iObj);
 
 			req.on("end", function () {
-				var itm = itemObj.item;
+				var itm = iObj.getItem();
 				items.push(itm);
 				res.end("Item Added: " + itm + "\n");
 			});
@@ -63,11 +75,11 @@ var server = http.createServer(function (req, res) {
 		case "PUT":
 			var index = sanitizeUrl(req, res);
 			if (index !== null) {
-				var itemObj = {item: ""};
-				processReq(req, itemObj);
+				var iObj = Object.create(itemObj);
+				processReq(req, iObj);
 
 				req.on("end", function () {
-					itm = itemObj.item;
+					itm = iObj.getItem;
 					res.end("Updating Item from: " + items[index] + " to: " + itm + "\n");
 					items[index] = itm;
 				});
