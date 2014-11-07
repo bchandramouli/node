@@ -1,10 +1,15 @@
 #!/usr/bin/env node --debug
 
 var http = require("http");
-
-var url = require("url");
+var pase = require("url").parse;
+var join = require("path").join;
+var fs = require("fs");
 
 var items = [];
+
+var root = __dirname;
+
+console.log("root = ", root);
 
 var itemObj = {
 	item: "",
@@ -20,7 +25,7 @@ var itemObj = {
 
 function sanitizeUrl(req, res) {
 
-	var path = url.parse(req.url).pathname;
+	var path = parse(req.url).pathname;
 	var index = parseInt(path.slice(1), 10);
 	index--; // Make it zero offset
 
