@@ -4,6 +4,7 @@ var http = require("http");
 var parse = require("url").parse;
 var join = require("path").join;
 var fs = require("fs");
+var qs = require("querystring");
 
 var items = [];
 
@@ -57,16 +58,41 @@ var server = http.createServer(function (req, res) {
 
 			req.on("end", function () {
 				var itm = postObj.getItem();
-				items.push(itm);
-				res.end("Item Added: " + itm + "\n");
+				items.push(itm.item);
+				res.end("Item Added: " + itm.item + "\n");
 			});
 			break;
 
 		case "GET":
-			items.forEach(function (item, i) {
-				res.write(i+1 + ". " + item + "\r\n");
+			if (req.url == "/") {
+				req.url = "/index.html";
+			}
+		    var url = parse(req.url);
+			var path = join(root, url.pathname);
+			fs.stat(path, function (err, stat) {
+				if (err) {
+					if (err.code === "ENOENT") {
+						res.statusCode = 404;
+						res.end("File not found");
+					} else {
+						res.statusCode = 500;
+						res.end("Internal Server Error");
+					}
+				} else {
+					var stream = fs.createReadStream(path);
+					stream.pipe(res);
+					stream.on("error", function (err) {
+						res.statusCode = 500;
+						res.end("Internal Server Error");
+					});
+					/*
+					items.forEach(function (item, i) {
+						res.write(i+1 + ". " + item + "\r\n");
+					});
+					*/
+					//res.end();
+				}
 			});
-			res.end();
 			break;
 
 		case "DELETE":
