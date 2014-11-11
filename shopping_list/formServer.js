@@ -1,7 +1,7 @@
 #!/usr/bin/env node --debug
 
 var http = require("http");
-var pase = require("url").parse;
+var parse = require("url").parse;
 var join = require("path").join;
 var fs = require("fs");
 var qs = require("querystring");
@@ -21,7 +21,6 @@ fs.readFile(indexPath, "utf8", function (err, data) {
 		console.log(err);
 	}
 	indexBuff += data;
-	console.log("index buffer = ", indexBuff);
 });
 
 var itemObj = {
@@ -66,9 +65,9 @@ var server = http.createServer(function (req, res) {
 		case "POST":
 			var postObj = Object.create(itemObj);
 			processReq(req, postObj);
-
 			req.on("end", function () {
-				var itm = postObj.getItem();
+				var itm = qs.parse(postObj.getItem()).itemPost;
+				console.log(itm);
 				items.push(itm);
 				res.end("Item Added: " + itm + "\n");
 			});
@@ -76,13 +75,11 @@ var server = http.createServer(function (req, res) {
 
 		case "GET":
 			console.log("in get");
-		    var tBuff = "<p>";
+		    var tBuff = "";
 			items.forEach(function (item, i) {
 				tBuff += i+1 + ". " + item + "<br>";
 			});
-			tBuff += "</p>";
 			var output_buff = indexBuff.replace("<placeholder>", tBuff);
-			console.log(output_buff);
 			res.end(output_buff);
 			break;
 
@@ -95,18 +92,24 @@ var server = http.createServer(function (req, res) {
 		    break;
 
 		case "PUT":
+			console.log("in put");
 			var pIdx = sanitizeUrl(req, res);
+			console.log("pidx = ", pIdx);
 			if (pIdx !== null) {
 				var putObj = Object.create(itemObj);
 				processReq(req, putObj);
 
 				req.on("end", function () {
-					itm = putObj.getItem;
+					itm = qs.parse(putObj.getItem()).itemPut;
 					res.end("Updating Item from: " + items[pIdx] + " to: " + itm + "\n");
 					items[pIdx] = itm;
 				});
 			}
 			break;
+
+		default:
+		    console.log("invalid case statement");
+		    break;
 	}
 });
 
