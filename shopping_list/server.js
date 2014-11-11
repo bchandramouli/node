@@ -1,7 +1,7 @@
 #!/usr/bin/env node --debug
 
 var http = require("http");
-var pase = require("url").parse;
+var parse = require("url").parse;
 var join = require("path").join;
 var fs = require("fs");
 
@@ -31,11 +31,11 @@ function sanitizeUrl(req, res) {
 
 	if (isNaN(index)) {
 		res.statusCode = 400;
-    	res.write("Invalid Index\n");
+    	res.end("Invalid Index\n");
     	return (null);
     } else if (!items[index]) {
     	res.statusCode = 404;
-    	res.write("Item not found\n");
+    	res.end("Item not found\n");
     	return (null);
     }
 	return (index);
@@ -84,7 +84,7 @@ var server = http.createServer(function (req, res) {
 				processReq(req, putObj);
 
 				req.on("end", function () {
-					itm = putObj.getItem;
+					itm = putObj.getItem();
 					res.end("Updating Item from: " + items[pIdx] + " to: " + itm + "\n");
 					items[pIdx] = itm;
 				});
