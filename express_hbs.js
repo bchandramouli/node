@@ -1,11 +1,13 @@
 #!/usr/bin/env node --debug
 
-var express = require("express"), port = 8000;
+var express = require("express"),
+    port = 8000, 
+    expressHbs = require("express-handlebars");
+ 
 var app = express();
+var hbs = expressHbs.create({extName:"Hbs", delfaultLayout: "main.hbs"});
 
-var expressHbs = require("express-handlebars");
-
-app.engine('hbs', expressHbs({extName: "Hbs", defaultLayout: "main.hbs"}));
+app.engine('hbs', hbs.engine);
 app.set("view engine", "hbs");
 
 app.get("/:name", function (req, res) {
