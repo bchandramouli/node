@@ -5,7 +5,7 @@ var parse = require("url").parse;
 var join = require("path").join;
 var fs = require("fs");
 
-var items = [];
+var items = ["rice", "eggs", "milk"];
 
 var root = __dirname;
 
@@ -70,7 +70,7 @@ var server = http.createServer(function (req, res) {
 			break;
 
 		case "DELETE":
-            var dIdx = sanitizeUrl(req, res);
+                        var dIdx = sanitizeUrl(req, res);
 			if (dIdx !== null) {
 		    	res.end("Deleting item " + items[dIdx] + " ...\n");
 		    	items.splice(dIdx, 1);
