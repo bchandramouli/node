@@ -1,20 +1,58 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'express', '--save' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'owner', 'ls' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
-4 error Failed to parse json
-4 error Unexpected string
-5 error File: /Users/moulib/webFrameworks/node/shopping_list/package.json
-6 error Failed to parse package.json data.
-6 error package.json must be actual JSON, not just JavaScript.
-6 error
-6 error This is not a bug in npm.
-6 error Tell the package author to fix their package.json file. JSON.parse
-7 error System Darwin 13.4.0
-8 error command "node" "/usr/local/bin/npm" "install" "express" "--save"
-9 error cwd /Users/moulib/webFrameworks/node/shopping_list
-10 error node -v v0.10.32
-11 error npm -v 1.4.28
-12 error file /Users/moulib/webFrameworks/node/shopping_list/package.json
-13 error code EJSONPARSE
-14 verbose exit [ 1, true ]
+4 verbose request where is /shopping_list
+5 verbose request registry https://registry.npmjs.org/
+6 verbose request id 0586f1812a35c890
+7 verbose url raw /shopping_list
+8 verbose url resolving [ 'https://registry.npmjs.org/', './shopping_list' ]
+9 verbose url resolved https://registry.npmjs.org/shopping_list
+10 verbose request where is https://registry.npmjs.org/shopping_list
+11 info trying registry request attempt 1 at 20:49:07
+12 http GET https://registry.npmjs.org/shopping_list
+13 http 404 https://registry.npmjs.org/shopping_list
+14 verbose headers { date: 'Wed, 26 Nov 2014 04:49:08 GMT',
+14 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+14 verbose headers   'content-type': 'application/json',
+14 verbose headers   'cache-control': 'max-age=0',
+14 verbose headers   'content-length': '52',
+14 verbose headers   'accept-ranges': 'bytes',
+14 verbose headers   via: '1.1 varnish',
+14 verbose headers   age: '0',
+14 verbose headers   'x-served-by': 'cache-lax1428-LAX',
+14 verbose headers   'x-cache': 'MISS',
+14 verbose headers   'x-cache-hits': '0',
+14 verbose headers   'x-timer': 'S1416977348.389300,VS0,VE44',
+14 verbose headers   'keep-alive': 'timeout=10, max=50',
+14 verbose headers   connection: 'Keep-Alive' }
+15 silly registry.get cb [ 404,
+15 silly registry.get   { date: 'Wed, 26 Nov 2014 04:49:08 GMT',
+15 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+15 silly registry.get     'content-type': 'application/json',
+15 silly registry.get     'cache-control': 'max-age=0',
+15 silly registry.get     'content-length': '52',
+15 silly registry.get     'accept-ranges': 'bytes',
+15 silly registry.get     via: '1.1 varnish',
+15 silly registry.get     age: '0',
+15 silly registry.get     'x-served-by': 'cache-lax1428-LAX',
+15 silly registry.get     'x-cache': 'MISS',
+15 silly registry.get     'x-cache-hits': '0',
+15 silly registry.get     'x-timer': 'S1416977348.389300,VS0,VE44',
+15 silly registry.get     'keep-alive': 'timeout=10, max=50',
+15 silly registry.get     connection: 'Keep-Alive' } ]
+16 error owner ls Couldn't get owner data shopping_list
+17 error 404 404 Not Found: shopping_list
+17 error 404
+17 error 404 'shopping_list' is not in the npm registry.
+17 error 404 You should bug the author to publish it
+17 error 404
+17 error 404 Note that you can also install from a
+17 error 404 tarball, folder, or http url, or git url.
+18 error System Darwin 13.4.0
+19 error command "node" "/usr/local/bin/npm" "owner" "ls"
+20 error cwd /Users/moulib/webFrameworks/node/shopping_list
+21 error node -v v0.10.32
+22 error npm -v 1.4.28
+23 error code E404
+24 verbose exit [ 1, true ]
